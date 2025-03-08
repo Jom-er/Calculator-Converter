@@ -1,0 +1,98 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Converter Calculator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+        <h1 class="text-2xl font-bold mb-6 text-center">Converter Calculator</h1>
+        <div class="mb-4">
+            <label for="inputValue" class="block text-gray-700 font-medium mb-2">Enter Value:</label>
+            <input type="number" id="inputValue" class="w-full p-2 border border-gray-300 rounded" placeholder="Enter value to convert">
+        </div>
+        <div class="mb-4">
+            <label for="conversionType" class="block text-gray-700 font-medium mb-2">Conversion Type:</label>
+            <select id="conversionType" class="w-full p-2 border border-gray-300 rounded">
+                <option value="poundsToKg">Pounds to Kilograms</option>
+                <option value="kgToPounds">Kilograms to Pounds</option>
+                <option value="ouncesToGrams">Ounces to Grams</option>
+                <option value="gramsToOunces">Grams to Ounces</option>
+                <option value="gallonsToLiters">Gallons to Liters</option>
+                <option value="litersToGallons">Liters to Gallons</option>
+            </select>
+        </div>
+        <div class="mb-6">
+            <label for="result" class="block text-gray-700 font-medium mb-2">Result:</label>
+            <input type="text" id="result" class="w-full p-2 border border-gray-300 rounded bg-gray-100" readonly>
+        </div>
+        <div id="solutions" class="mt-6">
+            <h2 class="text-xl font-semibold mb-4">Solution:</h2>
+            <ul id="solutionList" class="list-disc list-inside text-gray-700">
+                <!-- Solution will be appended here -->
+            </ul>
+        </div>
+        <button id="convertBtn" class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600">Convert</button>
+    </div>
+
+    <script>
+        document.getElementById('convertBtn').addEventListener('click', function() {
+            const inputValue = parseFloat(document.getElementById('inputValue').value);
+            const conversionType = document.getElementById('conversionType').value;
+            let result;
+            let solution;
+
+            if (isNaN(inputValue)) {
+                result = 'Please enter a valid number';
+                solution = '';
+            } else {
+                switch (conversionType) {
+                    case 'poundsToKg':
+                        result = (inputValue * 0.453592).toFixed(2) + ' kg';
+                        solution = `${inputValue} pounds * 0.453592 = ${result}`;
+                        break;
+                    case 'kgToPounds':
+                        result = (inputValue / 0.453592).toFixed(2) + ' pounds';
+                        solution = `${inputValue} kg / 0.453592 = ${result}`;
+                        break;
+                    case 'ouncesToGrams':
+                        result = (inputValue * 28.3495).toFixed(2) + ' grams';
+                        solution = `${inputValue} ounces * 28.3495 = ${result}`;
+                        break;
+                    case 'gramsToOunces':
+                        result = (inputValue / 28.3495).toFixed(2) + ' ounces';
+                        solution = `${inputValue} grams / 28.3495 = ${result}`;
+                        break;
+                    case 'gallonsToLiters':
+                        result = (inputValue * 3.78541).toFixed(2) + ' liters';
+                        solution = `${inputValue} gallons * 3.78541 = ${result}`;
+                        break;
+                    case 'litersToGallons':
+                        result = (inputValue / 3.78541).toFixed(2) + ' gallons';
+                        solution = `${inputValue} liters / 3.78541 = ${result}`;
+                        break;
+                    default:
+                        result = 'Invalid conversion type';
+                        solution = '';
+                }
+            }
+
+            document.getElementById('result').value = result;
+
+            const solutionList = document.getElementById('solutionList');
+            solutionList.innerHTML = ''; // Clear previous solution
+            const solutionItem = document.createElement('li');
+            solutionItem.textContent = solution;
+            solutionList.appendChild(solutionItem);
+        });
+    </script>
+</body>
+</html>
